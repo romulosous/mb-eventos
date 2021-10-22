@@ -1,11 +1,16 @@
 <template>
-  <h1 class="ma-13 purple--text text-center">Teste</h1>
+  <div class="event-list">
+    <EventList />
+  </div>
 </template>
 
 <script>
+import EventList from "../components/EventList.vue";
 export default {
   name: "Home",
 
-  components: {},
+  components: {
+    EventList,
+  },
 };
 </script>
