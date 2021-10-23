@@ -1,10 +1,17 @@
 <template>
-  <v-app>
-    <Header />
-    <v-main>
-      <router-view />
-    </v-main>
-    <Footer />
+  <v-app id="app">
+    <template v-if="!this.$route.path.includes('login')">
+      <Header />
+      <v-main>
+        <router-view />
+      </v-main>
+      <Footer />
+    </template>
+    <v-content v-else>
+      <keep-alive>
+        <router-view />
+      </keep-alive>
+    </v-content>
   </v-app>
 </template>
 
