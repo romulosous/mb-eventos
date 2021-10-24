@@ -20,6 +20,7 @@
                   single-line
                   :rules="emailRules"
                   placeholder="Informe seu email"
+                  autocomplete="on"
                   v-model="email"
                   type="email"
                   required
@@ -33,6 +34,7 @@
                   id="password"
                   v-model="password"
                   placeholder="Informe sua senha"
+                  autocomplete="on"
                   type="password"
                 >
                   <v-icon slot="prepend" color="deep-purple accent-1">

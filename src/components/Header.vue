@@ -21,7 +21,7 @@
           </v-list-item>
           <v-list-item>
             <v-list-item-title
-              ><a class="purple--text" @click="signOut"
+              ><a class="purple--text" @click.once="signOut"
                 >signOut</a
               ></v-list-item-title
             >
@@ -54,8 +54,7 @@ export default {
       getAuth()
         .signOut()
         .then(() => {
-          console.log("desloguei");
-          this.$router.replace("login");
+          this.$router.push("/login");
         });
     },
   },
