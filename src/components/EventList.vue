@@ -18,9 +18,13 @@
                 src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
               ></v-img>
 
-              <v-card-title>{{ event.title }}</v-card-title>
+              <v-card-title class="">
+                <div class="headerClass ma-auto">
+                  {{ event.title }}
+                </div>
+              </v-card-title>
 
-              <v-card-text>
+              <v-card-text class="v-card-description">
                 <p :title="event.description">
                   {{ event.description | limitText }}
                 </p>
@@ -84,3 +88,20 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.headerClass {
+  white-space: nowrap;
+  word-break: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v-card-description {
+  /* white-space: nowrap; */
+  max-height: 80px;
+  word-break: normal;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
+}
+</style>

@@ -1,8 +1,8 @@
 <template>
   <div class="NotFound">
     <v-container>
-      <v-layout row wrap>
-        <v-flex xs12>
+      <v-row>
+        <v-col>
           <v-card height="400" color="transparent" flat>
             <div class="display-3 mt-5">404 - Page not found.</div>
             <div class="grey--text lighten-5">
@@ -15,8 +15,8 @@
               contact MB Eventos for support.
             </div>
           </v-card>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>

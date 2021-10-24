@@ -60,10 +60,7 @@
                 <v-card-actions class="text--secondary">
                   <v-spacer></v-spacer>
                   Já tem uma conta?
-                  <router-link
-                    :to="{ name: 'Login' }"
-                    class="pl-2"
-                    style="color: #000000"
+                  <router-link :to="{ name: 'Login' }" class="pl-2 black--text"
                     >Entrar</router-link
                   >
                 </v-card-actions>
@@ -72,11 +69,8 @@
             <v-card-actions class="ml-6 mr-6 text-center">
               <p>
                 Ao continuar, você concorda com a
-                <a href="#" class="pl-2" style="color: #000000">Política</a> e
-                os
-                <a href="#" class="pl-2" style="color: #000000"
-                  >Termos de Uso
-                </a>
+                <a href="#" class="pl-2 black--text">Política</a> e os
+                <a href="#" class="pl-2 black--text">Termos de Uso </a>
                 da MB Eventos.
               </p>
             </v-card-actions>
