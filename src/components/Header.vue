@@ -20,7 +20,7 @@
           </v-list-item>
           <v-list-item>
             <v-list-item-title
-              ><a class="purple--text" @click.once="signOut"
+              ><a class="purple--text" @click="signOut"
                 >signOut</a
               ></v-list-item-title
             >
@@ -33,8 +33,6 @@
 
 
 <script>
-// import { mdiAccount } from "@mdi/js";
-
 import {
   getAuth,
   GoogleAuthProvider,
