@@ -74,7 +74,6 @@ export default {
     async getEvents() {
       const { data } = await api.get("/events");
       this.events = data;
-      console.log(data);
     },
   },
 };
