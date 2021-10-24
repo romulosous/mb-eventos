@@ -16,5 +16,14 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export default initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 // firebase.analytics()
+
+
+export default function install(Vue) {
+  Object.defineProperty(Vue.prototype, "$firebase", {
+    get() {
+      return firebaseApp
+    }
+  })
+}
