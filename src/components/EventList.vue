@@ -10,10 +10,10 @@
             cols="12"
             md="4"
             sm="6"
-            v-for="(event, index) in events"
+            v-for="(event, index) in $allEvents"
             :key="index"
           >
-            <v-card class="mx-auto my-12" max-width="374">
+            <v-card class="mx-auto pa-4 my-12" max-width="374">
               <v-img
                 src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
               ></v-img>
@@ -54,8 +54,8 @@ export default {
   filters: {
     limitText(value) {
       if (!value) return "";
-      if (value.length <= 100) return value;
-      return `${value.substring(0, 100)}...`;
+      if (value.length <= 80) return value;
+      return `${value.substring(0, 80)}...`;
     },
     formatDate(date) {
       if (date) {
@@ -67,14 +67,20 @@ export default {
   data: () => ({
     events: null,
   }),
+  computed: {
+    $allEvents() {
+      return this.$store.getters.$allEvents;
+    },
+  },
   created() {
-    this.getEvents();
+    // this.getEvents();
+    this.$store.dispatch("fetchEvents");
   },
   methods: {
-    async getEvents() {
-      const { data } = await api.get("/events");
-      this.events = data;
-    },
+    // async getEvents() {
+    //   const { data } = await api.get("/events");
+    //   this.events = data;
+    // },
   },
 };
 </script>
