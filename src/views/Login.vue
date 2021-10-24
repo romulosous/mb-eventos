@@ -112,17 +112,11 @@ export default {
           // const {photoURL, email, displayName, uid} = userCredencial.user
           // Signed in
           const user = userCredencial.user;
-          //photoURL  email displayName uid
           this.$router.push("/").catch(() => {});
           // this.$router.replace("/");
-          console.log(user);
         })
         .catch((error) => {
           this.invalidLogin = true;
-          // const errorCode = error.code;
-          // const errorMessage = error.message;
-          // alert("Não foi possivel realizar o login. " + errorMessage);
-          // console.log(errorMessage);
         });
     },
     firebaseConfigs() {
