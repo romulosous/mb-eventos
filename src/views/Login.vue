@@ -1,54 +1,74 @@
 <template>
-  <v-content>
-    <v-container fluid fill-height>
-      <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md4>
-          <v-card style="height: 320px" class="elevation-12">
-            <v-toolbar dark color="purple">
-              <v-toolbar-title>Fazer Login</v-toolbar-title>
+  <v-app>
+    <!-- <v-container class="fill-height" fluid> -->
+    <v-container class="mt-16" fluid>
+      <v-row align="center" justify="center" dense>
+        <v-col cols="12" sm="8" lg="4">
+          <v-card class="elevation-12">
+            <v-toolbar dark color="deep-purple">
+              <v-toolbar-title>Login</v-toolbar-title>
             </v-toolbar>
 
             <v-card-text>
-              <v-form ref="form" v-model="valid" lazy-validation>
-                <v-container>
-                  <v-text-field
-                    single-line
-                    v-model="email"
-                    :rules="emailRules"
-                    label="E-mail"
-                    required
-                    ><v-icon slot="prepend" color="deep-purple accent-1">
-                      mdi-account
-                    </v-icon></v-text-field
-                  >
+              <v-form
+                ref="form"
+                v-model="valid"
+                @submit="login"
+                lazy-validation
+              >
+                <v-text-field
+                  single-line
+                  :rules="emailRules"
+                  placeholder="Informe seu email"
+                  v-model="email"
+                  type="email"
+                  required
+                  ><v-icon slot="prepend" color="deep-purple accent-1">
+                    mdi-account
+                  </v-icon></v-text-field
+                >
 
-                  <v-text-field
-                    single-line
-                    id="password"
-                    name="password"
-                    label="Password"
-                    type="password"
+                <v-text-field
+                  single-line
+                  id="password"
+                  v-model="password"
+                  placeholder="Informe sua senha"
+                  type="password"
+                >
+                  <v-icon slot="prepend" color="deep-purple accent-1">
+                    mdi-lock
+                  </v-icon>
+                </v-text-field>
+                <v-btn
+                  class="rounded-0 mt-3"
+                  color="deep-purple"
+                  x-large
+                  block
+                  dark
+                  @click="login"
+                  >Entrar</v-btn
+                >
+                <v-card-actions>
+                  <v-checkbox color="black" label="Remember me"></v-checkbox>
+                  <v-spacer></v-spacer>
+                  Não tem uma conta?
+                  <router-link
+                    style="color: #000000"
+                    class="ml-1"
+                    to="/sign-up"
                   >
-                    <v-icon slot="prepend" color="deep-purple accent-1">
-                      mdi-lock
-                    </v-icon>
-                  </v-text-field>
-                </v-container>
+                    Inscrever-se</router-link
+                  >
+                </v-card-actions>
               </v-form>
             </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
 
-              <v-btn color="purple" class="white--text ml-4" to="/"
-                >Entrar</v-btn
-              >
-              <v-spacer></v-spacer>
-            </v-card-actions>
+            <v-divider></v-divider>
           </v-card>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
-  </v-content>
+  </v-app>
 </template>
 
 
@@ -58,11 +78,40 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 
 export default {
+  data: () => ({
+    valid: false,
+    email: "",
+    password: "",
+    emailRules: [
+      (v) =>
+        !v ||
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+        "E-mail inválido",
+    ],
+  }),
   methods: {
+    login() {
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, this.email, this.password)
+        .then((userCredencial) => {
+          // Signed in
+          const user = userCredencial.user;
+          this.$router.push("/");
+          // this.$router.replace("/");
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert("Não foi possivel realizar o login. " + errorMessage);
+          console.log(errorMessage);
+        });
+    },
     firebaseConfigs() {
       const googleAuthProvider = new GoogleAuthProvider();
 
