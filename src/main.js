@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
+import firebaseApp from "./plugins/firebase"
 import router from './router'
 import store from './store'
 
@@ -11,6 +12,7 @@ import "./plugins/firebase"
 
 
 Vue.config.productionTip = false
+Vue.use(firebaseApp)
 
 new Vue({
   router,

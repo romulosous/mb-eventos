@@ -109,9 +109,11 @@ export default {
       const auth = getAuth();
       signInWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredencial) => {
+          // const {photoURL, email, displayName, uid} = userCredencial.user
           // Signed in
           const user = userCredencial.user;
-          this.$router.push("/");
+          //photoURL  email displayName uid
+          this.$router.push("/").catch(() => {});
           // this.$router.replace("/");
           console.log(user);
         })

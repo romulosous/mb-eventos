@@ -5,7 +5,6 @@
 
       <v-spacer></v-spacer>
 
-      <v-app-bar-nav-icon> </v-app-bar-nav-icon>
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
@@ -34,7 +33,8 @@
 
 
 <script>
-import { mdiAccount } from "@mdi/js";
+// import { mdiAccount } from "@mdi/js";
+
 import {
   getAuth,
   GoogleAuthProvider,
@@ -45,16 +45,16 @@ import {
 export default {
   name: "Header",
   data: () => ({
-    icons: {
-      mdiAccount,
-    },
+    // icons: {
+    //   mdiAccount,
+    // },
   }),
   methods: {
     signOut() {
       getAuth()
         .signOut()
         .then(() => {
-          this.$router.push("/login");
+          this.$router.push("/login").catch(() => {});
         });
     },
   },
