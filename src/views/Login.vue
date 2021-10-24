@@ -61,11 +61,7 @@
                   <v-checkbox color="black" label="Remember me"></v-checkbox>
                   <v-spacer></v-spacer>
                   Não tem uma conta?
-                  <router-link
-                    style="color: #000000"
-                    class="ml-1"
-                    to="/sign-up"
-                  >
+                  <router-link class="ml-1 black--text" to="/sign-up">
                     Inscrever-se</router-link
                   >
                 </v-card-actions>
