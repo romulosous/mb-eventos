@@ -9,11 +9,19 @@
               <v-toolbar-title>Criar uma conta</v-toolbar-title>
             </v-toolbar>
 
+            <p
+              v-if="invalidAccount"
+              class="purple--text ma-0 pa-0 pt-4 text-center"
+            >
+              Email já cadastrado!!!
+            </p>
+
             <v-card-text>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field
                   single-line
                   :rules="nameRules"
+                  autocomplete="on"
                   label="Nome"
                   v-model="name"
                   type="name"
@@ -22,6 +30,7 @@
                 <v-text-field
                   single-line
                   :rules="emailRules"
+                  autocomplete="on"
                   label="E-mail"
                   v-model.lazy="email"
                   type="email"
@@ -33,6 +42,7 @@
                   id="password"
                   v-model.lazy="password"
                   :rules="passwordRules"
+                  autocomplete="on"
                   label="Password"
                   type="password"
                 >
@@ -49,7 +59,7 @@
                 >
                 <v-card-actions class="text--secondary">
                   <v-spacer></v-spacer>
-                  já tem uma conta?
+                  Já tem uma conta?
                   <router-link
                     :to="{ name: 'Login' }"
                     class="pl-2"
@@ -83,6 +93,7 @@ export default {
   name: "SignUp",
   data: () => ({
     valid: false,
+    invalidAccount: false,
     name: "",
     nameRules: [
       (v) => !!v || "Nome é Obrigatório",
@@ -109,13 +120,19 @@ export default {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
+          this.$router.push("/login");
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
+          this.invalidAccount = true;
         });
+    },
+  },
+  watch: {
+    email() {
+      this.invalidAccount = false;
+    },
+    password() {
+      this.invalidAccount = false;
     },
   },
 };

@@ -9,6 +9,13 @@
               <v-toolbar-title>Login</v-toolbar-title>
             </v-toolbar>
 
+            <p
+              v-if="invalidLogin"
+              class="purple--text ma-0 pa-0 pt-4 text-center"
+            >
+              Senha ou email inválido!!!
+            </p>
+
             <v-card-text>
               <v-form
                 ref="form"
@@ -87,6 +94,7 @@ import {
 export default {
   data: () => ({
     valid: false,
+    invalidLogin: false,
     email: "",
     password: "",
     emailRules: [
@@ -108,10 +116,11 @@ export default {
           console.log(user);
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          alert("Não foi possivel realizar o login. " + errorMessage);
-          console.log(errorMessage);
+          this.invalidLogin = true;
+          // const errorCode = error.code;
+          // const errorMessage = error.message;
+          // alert("Não foi possivel realizar o login. " + errorMessage);
+          // console.log(errorMessage);
         });
     },
     firebaseConfigs() {
@@ -146,6 +155,14 @@ export default {
           // The AuthCredential type that was used.
           // const credential = GoogleAuthProvider.credentialFromError(error);
         });
+    },
+  },
+  watch: {
+    email() {
+      this.invalidLogin = false;
+    },
+    password() {
+      this.invalidLogin = false;
     },
   },
 };
