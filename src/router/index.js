@@ -6,13 +6,14 @@ import SignUp from '../views/SignUp.vue'
 
 
 import { getAuth } from '@firebase/auth'
+import store from "../store/index"
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home,
     meta: {
       requestAuth: true
@@ -20,17 +21,29 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: Login
   },
   {
     path: '/sign-up',
-    name: 'SignUp',
+    name: 'signup',
     component: SignUp
   },
   {
+    path: "/evento/:id",
+    name: "event",
+    component: () => import("../views/Event.vue"),
+    props: true
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: () => import("../views/admin/Admin.vue"),
+
+  },
+  {
     path: '*',
-    name: 'NotFound',
+    name: 'notfound',
     component: () => import("../views/NotFound.vue")
   }
 
@@ -44,18 +57,22 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
-  const SIGN_UP = "/sign-up"
+  const HOME = "/"
   const LOGIN = "/login"
-  const PAGINA_INICIAL_AUTENTICADO = "/"
+  const SIGN_UP = "/sign-up"
+  const DASHBOARD = "/dashboard"
   const auth = getAuth()
   auth.onAuthStateChanged(user => {
     if (user) {
-      if (to.path === LOGIN) {
-        next({ path: PAGINA_INICIAL_AUTENTICADO })
+      const { email, displayName, uid } = user
+      store.dispatch("updateUser", { email, displayName, uid });
+
+      if (to.path === LOGIN || to.path === SIGN_UP) {
+        next({ path: DASHBOARD })
       }
       next()
     } else {
-      if (to.path !== LOGIN && to.path !== SIGN_UP) {
+      if (to.path !== LOGIN && to.path !== SIGN_UP && to.path !== HOME) {
         next({ path: LOGIN })
       }
     }
