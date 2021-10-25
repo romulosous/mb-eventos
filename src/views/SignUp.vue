@@ -54,7 +54,7 @@
                   x-large
                   block
                   dark
-                  @click="signUp"
+                  @click="createUser"
                   >Criar conta</v-btn
                 >
                 <v-card-actions class="text--secondary">
@@ -82,7 +82,6 @@
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 export default {
   name: "SignUp",
   data: () => ({
@@ -108,17 +107,17 @@ export default {
     ],
   }),
   methods: {
-    signUp() {
-      const auth = getAuth();
-      createUserWithEmailAndPassword(auth, this.email, this.password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          this.$router.push("/login");
-        })
-        .catch((error) => {
-          this.invalidAccount = true;
+    async createUser() {
+      try {
+        const response = await this.$store.dispatch("createUser", {
+          email: this.email,
+          password: this.password,
         });
+        this.$router.push("/login").catch(() => {});
+      } catch (error) {
+        console.log(error.message);
+        this.invalidAccount = true;
+      }
     },
   },
   watch: {

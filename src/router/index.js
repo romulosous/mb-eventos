@@ -66,7 +66,8 @@ router.beforeEach((to, from, next) => {
   auth.onAuthStateChanged(user => {
     if (user) {
       const { email, displayName, uid } = user
-      store.dispatch("updateUser", { email, displayName, uid });
+      store.commit("UPDATE_USER", { email, displayName, uid });
+      store.commit("UPDATE_LOGIN", true);
 
       if (to.path === LOGIN || to.path === SIGN_UP) {
         next({ path: DASHBOARD })

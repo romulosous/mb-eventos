@@ -1,21 +1,32 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
+
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     events: [],
+    login: false,
     user: {
-      id: "",
       name: "",
       email: ""
     }
-
   },
   mutations: {
     SET_EVENTS(state, events) {
       state.events = events
+    },
+    UPDATE_LOGIN(state, payload) {
+      state.login = payload
     },
     UPDATE_USER(state, payload) {
       state.user = Object.assign(state.user, payload)
@@ -261,9 +272,31 @@ export default new Vuex.Store({
       ]
       context.commit("SET_EVENTS", events)
     },
-    updateUser(context, payload) {
-      context.commit("UPDATE_USER", payload)
-    }
+    getUser(context, { email, password }) {
+      const auth = getAuth();
+      return signInWithEmailAndPassword(auth, email, password)
+        .then((userCredencial) => {
+          // Signed in
+          const { email, displayName, uid } = userCredencial.user;
+
+          context.commit("UPDATE_USER", { email, displayName, uid })
+          context.commit("UPDATE_LOGIN", true)
+
+        })
+    },
+    createUser(context, { email, password }) {
+      const auth = getAuth();
+      return createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const { email, displayName, uid } = userCredential.user;
+
+          context.commit("UPDATE_USER", { email, displayName, uid })
+          context.commit("UPDATE_LOGIN", true)
+
+        })
+
+    },
   },
   getters: {
     $allEvents(state) {
@@ -272,13 +305,5 @@ export default new Vuex.Store({
     $user(state) {
       return state.user
     }
-    // $getEventbyID: state => (id) => state.events.find(event => event.id == id),
-    // $getEventbyID: (state) => (id) => {
-    //   return state.events.find(event => event.id === id)
-    // }
-
-
-    // return state.events
-
   }
 })

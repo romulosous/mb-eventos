@@ -11,7 +11,7 @@
 
     <v-spacer></v-spacer>
 
-    <v-menu>
+    <v-menu v-if="$store.state.login">
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
           <v-icon aria-hidden="false"> mdi-account </v-icon>
@@ -38,18 +38,13 @@
         </v-list-item>
       </v-list>
     </v-menu>
+    <!-- <v-btn v-else> Logar</v-btn> -->
   </v-app-bar>
 </template>
 
 
 <script>
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 export default {
   name: "Header",
   data: () => ({
