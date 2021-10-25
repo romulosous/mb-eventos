@@ -17,12 +17,7 @@
             </p>
 
             <v-card-text>
-              <v-form
-                ref="form"
-                v-model="valid"
-                @submit="login"
-                lazy-validation
-              >
+              <v-form ref="form" v-model="valid" lazy-validation>
                 <v-text-field
                   single-line
                   :rules="emailRules"
