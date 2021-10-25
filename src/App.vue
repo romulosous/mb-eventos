@@ -1,17 +1,12 @@
 <template>
   <v-app id="app">
-    <!-- <template v-if="!this.$route.path.includes('login')"> -->
     <Header />
-    <v-main>
-      <router-view />
+    <v-main class="main">
+      <transition mode="out-in">
+        <router-view />
+      </transition>
     </v-main>
     <Footer />
-    <!-- </template> -->
-    <!-- <v-content v-else>
-      <keep-alive>
-        <router-view />
-      </keep-alive>
-    </v-content> -->
   </v-app>
 </template>
 
@@ -27,8 +22,14 @@ export default {
   data: () => ({
     //
   }),
+  created() {
+    this.$store.dispatch("fetchEvents");
+  },
 };
 </script>
 
-<style>
+<style scoped>
+.main {
+  background: #e7e3e3;
+}
 </style>

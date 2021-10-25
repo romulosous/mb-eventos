@@ -1,34 +1,44 @@
 <template>
-  <div>
-    <v-app-bar color="deep-purple" class="mb-10" dense dark>
-      <v-toolbar-title class="ml-4">MB Eventos</v-toolbar-title>
+  <v-app-bar height="80" color="deep-purple" dense dark>
+    <v-toolbar-title class="ml-4">
+      <router-link
+        style="text-decoration: none"
+        class="white--text"
+        :to="{ name: 'home' }"
+        >MB Eventos</router-link
+      >
+    </v-toolbar-title>
 
-      <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
 
-      <v-menu left bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon aria-hidden="false"> mdi-account </v-icon>
-          </v-btn>
-        </template>
+    <v-menu>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn icon v-bind="attrs" v-on="on">
+          <v-icon aria-hidden="false"> mdi-account </v-icon>
+        </v-btn>
+      </template>
 
-        <v-list>
-          <v-list-item>
-            <v-list-item-title
-              ><a class="purple--text">Perfil</a></v-list-item-title
-            >
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title
-              ><a class="purple--text" @click="signOut"
-                >signOut</a
-              ></v-list-item-title
-            >
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-app-bar>
-  </div>
+      <v-list>
+        <v-list-item>
+          <v-list-item-title
+            ><router-link
+              style="text-decoration: none"
+              class="purple--text"
+              to="/dashboard"
+              >Perfil</router-link
+            ></v-list-item-title
+          >
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-title
+            ><a class="purple--text" @click="signOut"
+              >signOut</a
+            ></v-list-item-title
+          >
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </v-app-bar>
 </template>
 
 

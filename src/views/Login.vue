@@ -61,11 +61,7 @@
                   <v-checkbox color="black" label="Remember me"></v-checkbox>
                   <v-spacer></v-spacer>
                   Não tem uma conta?
-                  <router-link
-                    style="color: #000000"
-                    class="ml-1"
-                    to="/sign-up"
-                  >
+                  <router-link class="ml-1 black--text" to="/sign-up">
                     Inscrever-se</router-link
                   >
                 </v-card-actions>
@@ -111,45 +107,13 @@ export default {
         .then((userCredencial) => {
           // const {photoURL, email, displayName, uid} = userCredencial.user
           // Signed in
-          const user = userCredencial.user;
+          const { email, displayName, uid } = userCredencial.user;
+
           this.$router.push("/").catch(() => {});
           // this.$router.replace("/");
         })
         .catch((error) => {
           this.invalidLogin = true;
-        });
-    },
-    firebaseConfigs() {
-      const googleAuthProvider = new GoogleAuthProvider();
-
-      const auth = new getAuth();
-
-      return { googleAuthProvider, auth };
-    },
-    signInWithGooglePopup() {
-      const { auth, googleAuthProvider } = this.firebaseConfigs();
-      signInWithPopup(auth, googleAuthProvider)
-        .then((result) => {
-          console.log("Error in signin popup with google", result);
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          // const credential = GoogleAuthProvider.credentialFromResult(result);
-          // const token = credential.accessToken;
-
-          // The signed-in user info.
-          // const user = result.user;
-        })
-        .catch((error) => {
-          console.log("Error in signin popup with google", error);
-
-          // Handle Errors here.
-          // const errorCode = error.code;
-
-          // const errorMessage = error.message;
-          // The email of the user's account used.
-          // const email = error.email;
-
-          // The AuthCredential type that was used.
-          // const credential = GoogleAuthProvider.credentialFromError(error);
         });
     },
   },
@@ -163,8 +127,6 @@ export default {
   },
 };
 </script>
-
-
 
 <style>
 </style>
