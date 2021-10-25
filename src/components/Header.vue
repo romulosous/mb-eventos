@@ -14,7 +14,7 @@
     <v-menu v-if="$store.state.login">
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
-          <v-icon aria-hidden="false"> mdi-account </v-icon>
+          <v-icon size="30" aria-hidden="false"> mdi-account </v-icon>
         </v-btn>
       </template>
 
@@ -24,7 +24,7 @@
             ><router-link
               style="text-decoration: none"
               class="purple--text"
-              to="/dashboard"
+              to="/usuario"
               >Perfil</router-link
             ></v-list-item-title
           >
