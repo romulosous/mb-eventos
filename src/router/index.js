@@ -60,6 +60,7 @@ router.beforeEach((to, from, next) => {
   const HOME = "/"
   const LOGIN = "/login"
   const SIGN_UP = "/sign-up"
+  const EVENT = "/evento/:id"
   const DASHBOARD = "/dashboard"
   const auth = getAuth()
   auth.onAuthStateChanged(user => {
@@ -72,7 +73,8 @@ router.beforeEach((to, from, next) => {
       }
       next()
     } else {
-      if (to.path !== LOGIN && to.path !== SIGN_UP && to.path !== HOME) {
+      // to.path !== SIGN_UP && to.path !== HOME && to.path !== EVENT
+      if (to.path === DASHBOARD) {
         next({ path: LOGIN })
       }
     }

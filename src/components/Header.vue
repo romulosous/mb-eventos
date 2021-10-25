@@ -32,7 +32,7 @@
         <v-list-item>
           <v-list-item-title
             ><a class="purple--text" @click="signOut"
-              >signOut</a
+              >Deslogar</a
             ></v-list-item-title
           >
         </v-list-item>
