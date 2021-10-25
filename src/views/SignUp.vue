@@ -60,7 +60,7 @@
                 <v-card-actions class="text--secondary">
                   <v-spacer></v-spacer>
                   Já tem uma conta?
-                  <router-link :to="{ name: 'Login' }" class="pl-2 black--text"
+                  <router-link :to="{ name: 'login' }" class="pl-2 black--text"
                     >Entrar</router-link
                   >
                 </v-card-actions>
