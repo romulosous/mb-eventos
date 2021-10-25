@@ -54,7 +54,7 @@
                   x-large
                   block
                   dark
-                  @click="login"
+                  @click="getUser"
                   >Entrar</v-btn
                 >
                 <v-card-actions>
@@ -79,14 +79,6 @@
 
 
 <script>
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-
 export default {
   data: () => ({
     valid: false,
@@ -101,27 +93,21 @@ export default {
     ],
   }),
   methods: {
-    login() {
-      const auth = getAuth();
-      signInWithEmailAndPassword(auth, this.email, this.password)
-        .then((userCredencial) => {
-          // const {photoURL, email, displayName, uid} = userCredencial.user
-          // Signed in
-          const { email, displayName, uid } = userCredencial.user;
-
-          this.$router.push("/").catch(() => {});
-          // this.$router.replace("/");
-        })
-        .catch((error) => {
-          this.invalidLogin = true;
+    async getUser() {
+      try {
+        await this.$store.dispatch("getUser", {
+          email: this.email,
+          password: this.password,
         });
+        this.$router.push("/").catch(() => {});
+      } catch (error) {
+        console.log(error.message);
+        this.invalidLogin = true;
+      }
     },
   },
   watch: {
     email() {
-      this.invalidLogin = false;
-    },
-    password() {
       this.invalidLogin = false;
     },
   },
