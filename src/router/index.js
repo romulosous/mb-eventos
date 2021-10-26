@@ -40,14 +40,20 @@ const routes = [
     component: () => import("../views/admin/User.vue"),
     children: [
       {
-        path: "/",
+        path: "",
         name: "user",
-        component: import("../views/admin/UserEvents.vue"),
+        component: () => import("../views/admin/UserEvents.vue"),
       },
       {
         path: "inscricoes",
         name: "registrations",
-        component: import("../views/admin/UserRegistrations.vue")
+        component: () => import("../views/admin/UserRegistrations.vue")
+
+      },
+      {
+        path: "editar",
+        name: "edit-user",
+        component: () => import("../views/admin/UserEdit.vue")
 
       },
     ]

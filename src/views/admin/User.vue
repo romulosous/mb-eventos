@@ -22,9 +22,6 @@
 
       <v-list nav dense>
         <v-list-item link>
-          <!-- <v-list-item-icon>
-            <v-icon>mdi-folder</v-icon>
-          </v-list-item-icon> -->
           <v-list-item-title>
             <router-link :to="{ name: 'user' }">Eventos</router-link>
           </v-list-item-title>
@@ -38,7 +35,9 @@
         </v-list-item>
         <v-list-item link>
           <v-list-item-title>
-            <router-link to="/">Editar Usuário</router-link>
+            <router-link :to="{ name: 'edit-user' }"
+              >Editar Usuário</router-link
+            >
           </v-list-item-title>
         </v-list-item>
         <v-list-item link>
@@ -49,9 +48,9 @@
       </v-list>
     </v-navigation-drawer>
     <v-container class="pa-2" style="background-color: #c2c2c2">
-      <router-view></router-view>
-      <!-- <v-main> -->
-      <!-- </v-main> -->
+      <v-main>
+        <router-view></router-view>
+      </v-main>
     </v-container>
   </v-card>
 </template>
