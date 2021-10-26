@@ -1,12 +1,21 @@
 <template>
   <v-app id="app">
-    <Header />
-    <v-main class="main">
-      <transition mode="out-in">
-        <router-view />
-      </transition>
-    </v-main>
-    <Footer />
+    <template v-if="!this.$route.path.includes('usuario')">
+      <Header />
+      <v-main class="main">
+        <transition mode="out-in">
+          <router-view />
+        </transition>
+      </v-main>
+      <Footer />
+    </template>
+    <keep-alive>
+      <v-main class="main">
+        <transition mode="out-in">
+          <router-view />
+        </transition>
+      </v-main>
+    </keep-alive>
   </v-app>
 </template>
 

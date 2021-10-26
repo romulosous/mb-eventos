@@ -34,7 +34,7 @@
 
             <v-divider class="mx-16"></v-divider>
 
-            <v-card-text>{{ event.startDate | formatDate }}</v-card-text>
+            <v-card-text>{{ event.startDate | formattedDate }}</v-card-text>
 
             <v-card-actions class="text-center">
               <v-btn color="deep-purple lighten-2 text-center" text>

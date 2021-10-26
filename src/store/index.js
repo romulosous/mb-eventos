@@ -18,8 +18,10 @@ export default new Vuex.Store({
     login: false,
     user: {
       name: "",
-      email: ""
-    }
+      email: "",
+      uid: ""
+    },
+    user_events: null
   },
   mutations: {
     SET_EVENTS(state, events) {
@@ -30,6 +32,12 @@ export default new Vuex.Store({
     },
     UPDATE_USER(state, payload) {
       state.user = Object.assign(state.user, payload)
+    },
+    UPDATE_USER_EVENTS(state, payload) {
+      state.user_events = payload
+    },
+    ADD_USER_EVENTS(state, payload) {
+      state.user_events.unshit(payload)
     }
   },
   actions: {
@@ -46,6 +54,7 @@ export default new Vuex.Store({
           startHour: 13,
           endHour: 15,
           owner: {
+            id: "2PUBRdVjX1VyiHk4lDFTukFtovD3",
             name: "Some name",
             email: "someemail@gmail.com",
           },
@@ -85,6 +94,7 @@ export default new Vuex.Store({
           startHour: 13,
           endHour: 15,
           owner: {
+            id: "2PUBRdVjX1VyiHk4lDFTukFtovD3",
             name: "Some name",
             email: "someemail@gmail.com",
           },
@@ -271,6 +281,14 @@ export default new Vuex.Store({
         },
       ]
       context.commit("SET_EVENTS", events)
+    },
+    getUserEvents(context) {
+      // Firebase
+      const userEvents = context.state.events.filter((event) => {
+        return event.owner.id === context.state.user.uid
+      })
+      context.commit("UPDATE_USER_EVENTS", userEvents)
+
     },
     getUser(context, { email, password }) {
       const auth = getAuth();
