@@ -178,8 +178,22 @@
                   class="justify-end text-center align-end"
                   style="height: 100%"
                 >
-                  <v-btn class="green" color="white" text> Editar </v-btn>
-                  <v-btn class="red" color="white" text> deletar </v-btn>
+                  <v-btn
+                    class="green"
+                    color="white"
+                    @click="editEvent(event.id)"
+                    text
+                  >
+                    Editar
+                  </v-btn>
+                  <v-btn
+                    class="red"
+                    color="white"
+                    @click="deleteEvent(event.id)"
+                    text
+                  >
+                    deletar
+                  </v-btn>
                 </v-card-actions>
               </v-col>
             </v-row>
@@ -192,7 +206,16 @@
 
 <script>
 import { getAuth } from "firebase/auth";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+
+import { doc, deleteDoc } from "firebase/firestore";
 
 import { mapState, mapActions } from "vuex";
 export default {
@@ -263,6 +286,13 @@ export default {
         console.error("Error adding document: ", e);
       }
     },
+    async deleteEvent(docId) {
+      console.log("Delete");
+      const db = getFirestore();
+      const response = await deleteDoc(doc(db, "events", docId));
+      console.log(response);
+    },
+    editEvent(docId) {},
     formatDate() {
       const year = new Date().getFullYear();
       const month = new Date().getMonth() + 1;

@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
 
 
 
@@ -24,7 +24,7 @@ export default new Vuex.Store({
       email: "",
       uid: ""
     },
-    user_events: null
+    user_events: []
   },
   mutations: {
     SET_EVENTS(state, event) {
@@ -36,11 +36,11 @@ export default new Vuex.Store({
     UPDATE_USER(state, payload) {
       state.user = Object.assign(state.user, payload)
     },
-    UPDATE_USER_EVENTS(state, payload) {
-      state.user_events = payload
+    UPDATE_USER_EVENTS(state, event) {
+      state.user_events.push(event)
     },
-    ADD_USER_EVENTS(state, payload) {
-      state.user_events.unshit(payload)
+    ADD_USER_EVENTS(state, event) {
+      state.user_events.unshit(event)
     }
   },
   actions: {
@@ -50,19 +50,32 @@ export default new Vuex.Store({
       const querySnapshot = await getDocs(collection(db, "events"));
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        // console.log(doc.id, " => ", doc.data());
         const data = doc.data()
         data.id = doc.id
         context.commit("SET_EVENTS", data)
       });
 
     },
-    getUserEvents(context) {
+    async getUserEvents(context) {
       // Firebase
-      const userEvents = context.state.events.filter((event) => {
-        return event.owner.id === context.state.user.uid
-      })
-      context.commit("UPDATE_USER_EVENTS", userEvents)
+      const db = getFirestore();
+      const auth = getAuth()
+      const q = query(collection(db, "events"), where("owner.id", "==", auth.currentUser.uid));
+      const querySnapshot = await getDocs(q);
+      console.log(querySnapshot)
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        const data = doc.data()
+        data.id = doc.id
+        context.commit("UPDATE_USER_EVENTS", data)
+      });
+
+      // const userEvents = context.state.events.filter((event) => {
+      //   return event.owner.id === context.state.user.uid
+      // })
+      // context.commit("UPDATE_USER_EVENTS", userEvents)
 
     },
     getUser(context, { email, password }) {
