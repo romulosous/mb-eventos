@@ -151,40 +151,38 @@
     <h2 class="text-center mt-8 purple--text">Meus Eventos</h2>
     <v-container>
       <v-row class="text-center">
-        <v-col class="ml-auto mr-16">
+        <v-col class="mr-16" cols="7">
           <v-card
-            width="100%"
             v-for="event in user_events"
             :key="event.id"
             class="mx-auto pa-4 my-12"
           >
-            <v-col cols="6">
-              <v-img
-                max-width="100%"
-                height="70%"
-                class="ma-auto"
-                src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-              ></v-img>
-            </v-col>
-
-            <v-col cols="12" md="6">
-              <v-col cols="12" md="12">
-                <v-main class="text-left">
-                  <v-card-title class="v-card-title">
-                    <div class="font-weight-bold">
-                      {{ event.title }}
-                    </div>
-                  </v-card-title>
-                </v-main>
+            <v-row>
+              <v-col cols="12" md="7">
+                <v-img
+                  max-width="100%"
+                  min-width="200"
+                  height="70%"
+                  class="ma-auto"
+                  src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+                ></v-img>
+                <v-card-title class="v-card-title mt-8">
+                  <div class="font-weight-bold">
+                    {{ event.title }}
+                  </div>
+                </v-card-title>
               </v-col>
-              <v-col cols="12" md="12">
-                <v-card-actions class="text-center mr-auto">
-                  <v-btn class="purple mr-4" color="white text-center" text>
-                    Inscrição
-                  </v-btn>
+
+              <v-col cols="12" md="5">
+                <v-card-actions
+                  class="justify-end text-center align-end"
+                  style="height: 100%"
+                >
+                  <v-btn class="green" color="white" text> Editar </v-btn>
+                  <v-btn class="red" color="white" text> deletar </v-btn>
                 </v-card-actions>
               </v-col>
-            </v-col>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
