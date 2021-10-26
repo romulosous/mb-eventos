@@ -202,28 +202,32 @@ export default {
     event: {
       title: "",
       description: "",
-      numberTickets: null,
       price: 0,
+      numberTickets: null,
       startDate: "",
-      startHour: "",
       endDate: "",
+      startHour: "",
       endHour: "",
       owner: {
         id: "",
         name: "",
         email: "",
       },
+      users: [{}],
       address: {
         zipcode: "",
+        disctrict: "",
         city: "",
         state: "",
         country: "",
         street: "",
+        number: null,
       },
 
       created_at: "",
       updateAt: "",
-      delectedAt: null,
+      deleted_at: null,
+      deleted_by: null,
     },
     select: null,
     items: ["Pago", "Gratuito"],
@@ -231,25 +235,27 @@ export default {
     checkbox: false,
   }),
   computed: {
-    ...mapState(["user_events", "login", "user"]),
+    ...mapState(["user_events", "login", "user", "events"]),
   },
   methods: {
     ...mapActions(["getUserEvents"]),
     async createEvent() {
-      const db = getFirestore();
       try {
         const { email, uid: id } = getAuth().currentUser;
         const name = email.replace(/@.*/, "");
 
-        this.event.owner = {
+        const owner = {
           email,
           name,
           id,
         };
 
+        const db = getFirestore();
         const docRef = await addDoc(collection(db, "events"), {
           ...this.event,
+          owner,
           created_at: this.formatDate(),
+          updated_at: this.formatDate(),
         });
 
         console.log("Document written with ID: ", docRef.id);

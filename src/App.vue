@@ -9,7 +9,7 @@
       </v-main>
       <Footer />
     </template>
-    <keep-alive>
+    <keep-alive v-else>
       <v-main class="main">
         <transition mode="out-in">
           <router-view />
@@ -32,7 +32,8 @@ export default {
     //
   }),
   created() {
-    this.$store.dispatch("fetchEvents");
+    this.$store.dispatch("getEvents");
+    console.log(this.$route.path.includes("usuario"));
   },
 };
 </script>
