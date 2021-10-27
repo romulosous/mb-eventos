@@ -98,6 +98,6 @@ export default new Vuex.Store({
     },
     $user(state) {
       return state.user
-    }
+    },
   }
 })
