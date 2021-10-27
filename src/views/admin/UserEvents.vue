@@ -262,7 +262,7 @@ export default {
             title: '',
             description: '',
             price: 0,
-            numberTickets: null,
+            numberTickets: 5,
             startDate: '',
             endDate: '',
             startHour: '',
@@ -317,12 +317,15 @@ export default {
                         id,
                     }
 
-                    const docRef = await addDoc(collection(db, 'events'), {
+                    const event = {
                         ...this.event,
                         owner,
                         created_at: this.formatDate(),
                         updated_at: this.formatDate(),
-                    })
+                    }
+
+                    const docRef = await addDoc(collection(db, 'events'), event)
+                    this.event = event
                 }
 
                 // console.log('Document written with ID: ', docRef.id)
@@ -349,7 +352,6 @@ export default {
         },
     },
     created() {
-        // console.log(this.$firebase);
         if (this.login) {
             this.getUserEvents()
         }
