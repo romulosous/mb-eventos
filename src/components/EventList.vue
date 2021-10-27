@@ -3,6 +3,7 @@
     <v-container>
         <h1 class="pa-2 text-center purple--text">Eventos</h1>
         <!-- Campo de busca -->
+
         <v-row class="text-center">
             <v-col
                 cols="12"
@@ -38,12 +39,12 @@
                             event.startDate | formattedDate
                         }}</v-card-text>
 
-                        <v-card-actions class="text-center">
+                        <v-card-actions class="justify-center text-center">
                             <v-btn
                                 color="deep-purple lighten-2 text-center"
                                 text
                             >
-                                Reserve
+                                Vizualizar
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -59,26 +60,26 @@
 export default {
     name: 'HelloWorld',
     filters: {
-        limitText (value) {
+        limitText(value) {
             if (!value) return ''
             if (value.length <= 80) return value
             return `${value.substring(0, 80)}...`
-        }
+        },
     },
     data: () => ({
-        events: null
+        events: null,
     }),
     computed: {
-        $allEvents () {
+        $allEvents() {
             return this.$store.getters.$allEvents
-        }
+        },
     },
     methods: {
         // async getEvents() {
         //   const { data } = await api.get("/events");
         //   this.events = data;
         // },
-    }
+    },
 }
 </script>
 

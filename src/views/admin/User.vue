@@ -25,28 +25,28 @@
             <v-divider></v-divider>
 
             <v-list nav dense>
-                <v-list-item link>
+                <v-list-item>
                     <v-list-item-title>
                         <router-link :to="{ name: 'user' }"
                             >Eventos</router-link
                         >
                     </v-list-item-title>
                 </v-list-item>
-                <v-list-item link>
+                <v-list-item>
                     <v-list-item-title>
                         <router-link :to="{ name: 'registrations' }"
                             >Inscrições</router-link
                         >
                     </v-list-item-title>
                 </v-list-item>
-                <v-list-item link>
+                <v-list-item>
                     <v-list-item-title>
                         <router-link :to="{ name: 'edit-user' }"
                             >Editar Usuário</router-link
                         >
                     </v-list-item-title>
                 </v-list-item>
-                <v-list-item link>
+                <v-list-item>
                     <v-list-item-title>
                         <router-link to="/">Deslogar</router-link>
                     </v-list-item-title>
@@ -67,13 +67,13 @@ import Header from '../../components/Header.vue'
 export default {
     name: 'User',
     components: {
-        Header
+        Header,
     },
     computed: {
-        user () {
+        user() {
             return this.$store.getters.$user
-        }
-    }
+        },
+    },
 }
 </script>
 
