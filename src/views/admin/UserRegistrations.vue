@@ -1,9 +1,9 @@
 <template>
-  <h1>Inscrições</h1>
+    <p>Iinscriçoes:</p>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style>
