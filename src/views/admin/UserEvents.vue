@@ -139,12 +139,22 @@
         </v-container>
 
         <v-btn
+          v-if="!buttonEdit"
           :disabled="!valid"
           color="success"
           class="mr-4"
-          @click="createEvent"
+          @click="submit"
         >
           Criar
+        </v-btn>
+        <v-btn
+          v-if="buttonEdit"
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="submit"
+        >
+          Atualizar
         </v-btn>
       </v-form>
     </v-container>
@@ -215,9 +225,9 @@ import {
   where,
 } from "firebase/firestore";
 
-import { doc, deleteDoc } from "firebase/firestore";
-
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { mapState, mapActions } from "vuex";
+
 export default {
   name: "UserEvents",
   data: () => ({
@@ -256,43 +266,57 @@ export default {
     items: ["Pago", "Gratuito"],
     Countryitems: ["Brazil", "Portugal", "Japão"],
     checkbox: false,
+    buttonEdit: false,
+    docId: "",
   }),
   computed: {
     ...mapState(["user_events", "login", "user", "events"]),
   },
   methods: {
     ...mapActions(["getUserEvents"]),
-    async createEvent() {
+    async submit() {
       try {
-        const { email, uid: id } = getAuth().currentUser;
-        const name = email.replace(/@.*/, "");
-
-        const owner = {
-          email,
-          name,
-          id,
-        };
-
         const db = getFirestore();
-        const docRef = await addDoc(collection(db, "events"), {
-          ...this.event,
-          owner,
-          created_at: this.formatDate(),
-          updated_at: this.formatDate(),
-        });
+
+        if (this.buttonEdit) {
+          const Ref = doc(db, "events", this.docId);
+          await updateDoc(Ref, this.event);
+        } else {
+          const { email, uid: id } = getAuth().currentUser;
+          const name = email.replace(/@.*/, "");
+
+          const owner = {
+            email,
+            name,
+            id,
+          };
+
+          const docRef = await addDoc(collection(db, "events"), {
+            ...this.event,
+            owner,
+            created_at: this.formatDate(),
+            updated_at: this.formatDate(),
+          });
+        }
 
         console.log("Document written with ID: ", docRef.id);
       } catch (e) {
         console.error("Error adding document: ", e);
       }
     },
-    async deleteEvent(docId) {
+    async deleteEvent(id) {
       console.log("Delete");
       const db = getFirestore();
-      const response = await deleteDoc(doc(db, "events", docId));
+      const response = await deleteDoc(doc(db, "events", id));
       console.log(response);
     },
-    editEvent(docId) {},
+    async editEvent(id) {
+      console.log("Edit");
+      const event = this.events.find((event) => event.id === id);
+      this.event = event;
+      this.buttonEdit = true;
+      this.docId = id;
+    },
     formatDate() {
       const year = new Date().getFullYear();
       const month = new Date().getMonth() + 1;
