@@ -24,7 +24,7 @@ export default new Vuex.Store({
       email: "",
       uid: ""
     },
-    user_events: []
+    user_events: [],
   },
   mutations: {
     SET_EVENTS(state, event) {
@@ -56,6 +56,7 @@ export default new Vuex.Store({
 
     },
     async getUserEvents(context) {
+      context.state.user_events = []
       const db = getFirestore();
       const auth = getAuth()
       const q = query(collection(db, "events"), where("owner.id", "==", auth.currentUser.uid));
@@ -98,6 +99,6 @@ export default new Vuex.Store({
     },
     $user(state) {
       return state.user
-    }
+    },
   }
 })
