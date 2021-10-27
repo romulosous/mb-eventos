@@ -1,10 +1,9 @@
 <template>
-  <h1>Editar Usuario</h1>
+    <h1>Editar Usuario</h1>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
-<style>
-</style>
+<style></style>
