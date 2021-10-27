@@ -36,10 +36,27 @@ const routes = [
     props: true
   },
   {
-    path: "/dashboard",
-    name: "dashboard",
-    component: () => import("../views/admin/Admin.vue"),
+    path: "/usuario",
+    component: () => import("../views/admin/User.vue"),
+    children: [
+      {
+        path: "",
+        name: "user",
+        component: () => import("../views/admin/UserEvents.vue"),
+      },
+      {
+        path: "inscricoes",
+        name: "registrations",
+        component: () => import("../views/admin/UserRegistrations.vue")
 
+      },
+      {
+        path: "editar",
+        name: "edit-user",
+        component: () => import("../views/admin/UserEdit.vue")
+
+      },
+    ]
   },
   {
     path: '*',
@@ -60,19 +77,21 @@ router.beforeEach((to, from, next) => {
   const HOME = "/"
   const LOGIN = "/login"
   const SIGN_UP = "/sign-up"
-  const DASHBOARD = "/dashboard"
+  const DASHBOARD = "/usuario"
   const auth = getAuth()
   auth.onAuthStateChanged(user => {
     if (user) {
       const { email, displayName, uid } = user
-      store.dispatch("updateUser", { email, displayName, uid });
+      store.commit("UPDATE_USER", { email, displayName, uid });
+      store.commit("UPDATE_LOGIN", true);
 
       if (to.path === LOGIN || to.path === SIGN_UP) {
         next({ path: DASHBOARD })
       }
       next()
     } else {
-      if (to.path !== LOGIN && to.path !== SIGN_UP && to.path !== HOME) {
+      // to.path !== SIGN_UP && to.path !== HOME && to.path !== EVENT
+      if (to.path === DASHBOARD) {
         next({ path: LOGIN })
       }
     }
