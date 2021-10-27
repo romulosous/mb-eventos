@@ -1,9 +1,9 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import "firebase/analytics";
+import firebase, { initializeApp } from "firebase/app";
 
 import "firebase/auth"
-import "firebase/firestore"
+import "firebase/analytics";
+import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBVfqkdo6_SIE2t-yYarMGR5g7Ek-SM_zE",
@@ -15,15 +15,13 @@ const firebaseConfig = {
   measurementId: "G-K25L62M59P"
 };
 
-// Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
-// firebase.analytics()
+const firebaseapp = initializeApp(firebaseConfig)
 
 
 export default function install(Vue) {
   Object.defineProperty(Vue.prototype, "$firebase", {
     get() {
-      return firebaseApp
+      return firebaseapp
     }
   })
 }

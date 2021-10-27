@@ -20,8 +20,8 @@
             </v-card-title>
 
             <v-card-text
-              >{{ event.startDate | formatDate }} –
-              {{ event.endDate | formatDate }} - {{ event.startHour }}:00 às
+              >{{ event.startDate | formattedDate }} –
+              {{ event.endDate | formattedDate }} - {{ event.startHour }}:00 às
               {{ event.endHour }}:00</v-card-text
             >
           </v-main>
@@ -53,7 +53,7 @@ export default {
   name: "Event",
   props: ["id"],
   filters: {
-    formatDate(date) {
+    formattedDate(date) {
       if (date) {
         return moment(String(date)).format("L");
       }
