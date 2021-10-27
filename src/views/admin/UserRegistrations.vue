@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="px-10">
         <h2 class="text-center mt-8 purple--text">Inscrições:</h2>
         <v-container>
             <v-row class="text-center">
-                <v-col class="mr-16" cols="10">
+                <v-col class="mr-16" cols="12">
                     <v-card
                         v-for="event in events"
                         :key="event.id"
@@ -13,6 +13,7 @@
                             <v-row>
                                 <v-col cols="12" md="6">
                                     <v-img
+                                        height="100%"
                                         class="ma-auto"
                                         src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
                                     ></v-img>
@@ -21,11 +22,22 @@
                                 <v-col cols="12" md="6">
                                     <div class="">
                                         <v-card-title class="v-card-title mt-8">
-                                            <div class="font-weight-bold">
+                                            <div
+                                                class="
+                                                    text-uppercase
+                                                    font-weight-bold
+                                                "
+                                            >
                                                 {{ event.title }}
                                             </div>
                                         </v-card-title>
-                                        <v-card-actions>
+
+                                        <v-card-text>
+                                            {{ event.description }}
+                                        </v-card-text>
+                                        <v-card-actions
+                                            class="justify-center align-center"
+                                        >
                                             <v-btn
                                                 class="red"
                                                 color="white"
@@ -89,7 +101,6 @@ export default {
         async unsubscribe(event) {
             const user = await this.getUser()
             const db = getFirestore()
-            console.log(event.id)
             const eventRef = doc(db, 'events', event.id)
 
             await updateDoc(eventRef, {
@@ -111,7 +122,6 @@ export default {
             await updateDoc(eventRef, { users: arrayRemove(userInArray) })
 
             const numberTickets = event.numberTickets + 1
-            console.log(numberTickets)
             await setDoc(
                 eventRef,
                 {

@@ -106,6 +106,25 @@
                                         </v-row>
                                     </v-container>
                                 </v-card>
+                                <p class="mt-13">Ingressos:</p>
+                                <v-card class="">
+                                    <v-container>
+                                        <v-row>
+                                            <v-col cols="12" md="6">
+                                                <v-text-field
+                                                    v-model.number="
+                                                        event.numberTickets
+                                                    "
+                                                    label="quantidade"
+                                                    type="number"
+                                                    min="10"
+                                                    max="99999"
+                                                    required
+                                                ></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                    </v-container>
+                                </v-card>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -187,33 +206,37 @@
         <h2 class="text-center mt-8 purple--text">Meus Eventos</h2>
         <v-container>
             <v-row class="text-center">
-                <v-col class="mr-16" cols="7">
+                <v-col class="mr-16" cols="6">
                     <v-card
                         v-for="event in user_events"
                         :key="event.id"
                         class="mx-auto pa-4 my-12"
                     >
                         <v-row>
-                            <v-col cols="12" md="7">
+                            <v-col cols="12" md="12">
                                 <v-img
                                     max-width="100%"
                                     min-width="200"
-                                    height="70%"
+                                    height="200px"
                                     class="ma-auto"
                                     src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
                                 ></v-img>
-                                <v-card-title class="v-card-title mt-8">
+                                <v-card-title
+                                    class="
+                                        text-uppercase
+                                        v-card-title
+                                        justify-center
+                                        mt-8
+                                    "
+                                >
                                     <div class="font-weight-bold">
                                         {{ event.title }}
                                     </div>
                                 </v-card-title>
                             </v-col>
 
-                            <v-col cols="12" md="5">
-                                <v-card-actions
-                                    class="justify-end text-center align-end"
-                                    style="height: 100%"
-                                >
+                            <v-col cols="12" md="12">
+                                <v-card-actions class="justify-end align-end">
                                     <v-btn
                                         class="green"
                                         color="white"
@@ -328,6 +351,37 @@ export default {
                     this.event = event
                 }
 
+                this.event = {
+                    title: '',
+                    description: '',
+                    price: 0,
+                    numberTickets: 5,
+                    startDate: '',
+                    endDate: '',
+                    startHour: '',
+                    endHour: '',
+                    owner: {
+                        id: '',
+                        name: '',
+                        email: '',
+                    },
+                    users: [{}],
+                    address: {
+                        zipcode: '',
+                        disctrict: '',
+                        city: '',
+                        state: '',
+                        country: '',
+                        street: '',
+                        number: null,
+                    },
+
+                    created_at: '',
+                    updateAt: '',
+                    deleted_at: null,
+                    deleted_by: null,
+                }
+
                 // console.log('Document written with ID: ', docRef.id)
             } catch (e) {
                 console.error('Error adding document: ', e)
@@ -336,7 +390,6 @@ export default {
         async deleteEvent(id) {
             const db = getFirestore()
             const response = await deleteDoc(doc(db, 'events', id))
-            console.log(response)
         },
         async editEvent(id) {
             const event = this.events.find((event) => event.id === id)

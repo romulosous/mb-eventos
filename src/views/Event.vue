@@ -81,6 +81,9 @@ moment.locale('pt-br')
 export default {
     name: 'Event',
     props: ['id'],
+    data() {
+        return {}
+    },
     filters: {
         formattedDate(date) {
             if (date) {
@@ -98,12 +101,26 @@ export default {
         },
     },
     methods: {
+        async getEventsRegistrations() {
+            const user = await this.getUser()
+
+            const db = getFirestore()
+
+            const q = query(
+                collection(db, 'events'),
+                where('users', 'array-contains', user)
+            )
+            const querySnapshot = await getDocs(q)
+            querySnapshot.forEach((doc) => {
+                const data = doc.data()
+                data.id = doc.id
+                this.events.push(data)
+            })
+        },
         async register(id) {
             const user = await this.getUser()
             const db = getFirestore()
-            console.log(id)
             const eventRef = doc(db, 'events', id)
-            console.log(eventRef)
             await updateDoc(eventRef, {
                 users: arrayUnion(user),
             })
